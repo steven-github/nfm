@@ -1,0 +1,36 @@
+<mat-toolbar class="tool-bar">
+  <!-- <button
+      mat-icon-button
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>apps</mat-icon>
+    </button> -->
+  <button mat-icon-button>
+    <img
+      (click)="main_logo_EVENT()"
+      style="padding-left: 3px"
+      width="42"
+      height="42"
+      alt="Angular Logo"
+      src="assets/logo.png"
+    />
+  </button>
+
+  <span class="app-title">{{ common_text.title }}</span>
+  <div class="right-button-section">
+    <button
+      (click)="mail_page_EVENT()"
+      mat-icon-button
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>mail</mat-icon>
+    </button>
+    <button
+      (click)="account_page_EVENT()"
+      mat-icon-button
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>perm_identity</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
