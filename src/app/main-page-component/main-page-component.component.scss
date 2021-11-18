@@ -28,6 +28,13 @@
   justify-content: space-between;
 }
 
+.vertical-order {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 30px 0 10px;
+}
+
 .middle-text {
   margin: auto;
   font-weight: 600;

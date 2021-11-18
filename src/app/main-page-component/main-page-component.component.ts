@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
   userNotFound = false;
   showUserInfoSection = false;
   loading = false;
+  panelOpenState = false;
 
   emailInput: string;
   accountInput: string;
@@ -71,6 +72,8 @@ export class MainPageComponent implements OnInit {
 
   loadedUserInfo: any;
   customers: Customer[] = [];
+  customersById: Customer[] = [];
+  searchType: string;
 
   constructor(private mainPageService: MainPageService) {
     this.accountInput = '';
@@ -83,6 +86,7 @@ export class MainPageComponent implements OnInit {
     this.selectedState = '';
     this.zipCode = 0;
     this.phoneNumber = 0;
+    this.searchType = 'email';
   }
 
   ngOnInit(): void {
@@ -116,15 +120,25 @@ export class MainPageComponent implements OnInit {
     // this.loadedUserInfo = this.userInfo; // this object should be populated by backend response -- single user example
     // this.loadedUserInfo = this.jointUserInfo; // this object should be populated by backend response -- joint user example
     const inputValue = this.emailInput ? this.emailInput : this.accountInput;
-    const searchType = this.emailInput ? 'email' : 'account';
-    this.mainPageService.getCustomers(inputValue, searchType).subscribe(customers => {
-      console.log('getCustomerByEmail', customers);
-      if (customers.length == 0) {
-        this.userNotFound = true;
-      }
-      this.customers = customers
-      this.loading = false;
-    });
+    this.searchType = this.emailInput ? 'email' : 'account';
+    this.mainPageService
+      .getCustomers(inputValue, this.searchType)
+      .subscribe((customers) => {
+        // console.log('getCustomerByEmail', customers);
+        if (customers.length == 0) {
+          this.userNotFound = true;
+        }
+        this.customers = customers;
+        this.loading = false;
+      });
+
+    if (this.emailInput) {
+      this.mainPageService
+        .getCustomerByEmail(this.emailInput)
+        .subscribe((customers: any) => {
+          console.log('customers', customers);
+        });
+    }
 
     // if (this.customers && this.customers.length > 0) {
     //   this.userNotFound = false;
@@ -132,6 +146,14 @@ export class MainPageComponent implements OnInit {
     //   this.userNotFound = true;
     // }
     // this.showUserInfoSection = true;
+  }
+
+  getCustomerByAccountId(id: string) {
+    console.log('ID:', id);
+    this.mainPageService.getCustomerByAccountId(id).subscribe((customers) => {
+      //   console.log('getCustomerByAccountId', customers);
+      this.customersById = customers;
+    });
   }
 
   update_EVENT() {
