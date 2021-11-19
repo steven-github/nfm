@@ -1,8 +1,3 @@
-export interface Hero {
-  id: number;
-  name: string;
-}
-
 export interface Customer {
   nfmAccountId: string;
   accountId: number;

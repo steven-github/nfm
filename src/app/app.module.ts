@@ -12,6 +12,7 @@ import { MainPageHeaderComponent } from './main-page-header/main-page-header.com
 import { MainPageComponent } from './main-page-component/main-page-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageService } from './common/services/main-page.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,9 @@ import { MainPageService } from './common/services/main-page.service';
     MainPageHeaderComponent,
     MainPageComponent,
   ],
-  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, MaterialModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [MainPageService],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

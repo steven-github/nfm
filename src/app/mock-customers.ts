@@ -21,8 +21,8 @@ export const CUSTOMERS: Customer[] = [
     addressPostalPlusFourCode: '75010-4411',
     addressCountryCode: 'USA',
     phoneWork: null,
-    phoneHome: '1212341234',
-    partyEmail: 'todd.vangalen@freemanco.com',
+    phoneHome: "18609,2145572721",
+    partyEmail: '1,todd.vangalen@freemanco.com',
     errorMsg: null,
   },
   {
@@ -44,9 +44,9 @@ export const CUSTOMERS: Customer[] = [
     addressStateProvinceCode: 'NE',
     addressPostalPlusFourCode: '68124-1059',
     addressCountryCode: 'USA',
-    phoneWork: '68091, 4025523999',
-    phoneHome: '1212341234',
-    partyEmail: 'mariarv@okstate.edu',
+    phoneWork: "68091, 4025523999",
+    phoneHome: "18614,4057620714",
+    partyEmail: '3,mariarv@okstate.edu|4,mvachapittack@gmail.comi',
     errorMsg: null,
   },
   {
@@ -70,7 +70,7 @@ export const CUSTOMERS: Customer[] = [
     addressCountryCode: null,
     phoneWork: '1212341234',
     phoneHome: '1212341234',
-    partyEmail: 'todd.vangalen@freemanco.com',
+    partyEmail: '1,todd.vangalen@freemanco.com',
     errorMsg: null,
   },
 ];

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { STATES } from '../common/constants/main-page.constants';
 import { MainPageService } from '../common/services/main-page.service';
-import { Customer, Hero } from '../customer';
+import { Customer, CustomerByEmail } from '../customer';
 
 @Component({
   selector: 'main-page',
@@ -71,6 +72,8 @@ export class MainPageComponent implements OnInit {
   allStates = STATES;
 
   loadedUserInfo: any;
+  emails: any;
+  accounts: any;
   customers: Customer[] = [];
   customersById: Customer[] = [];
   searchType: string;
@@ -119,33 +122,58 @@ export class MainPageComponent implements OnInit {
     }
     // this.loadedUserInfo = this.userInfo; // this object should be populated by backend response -- single user example
     // this.loadedUserInfo = this.jointUserInfo; // this object should be populated by backend response -- joint user example
-    const inputValue = this.emailInput ? this.emailInput : this.accountInput;
+
+    // const inputValue = this.emailInput ? this.emailInput : this.accountInput;
     this.searchType = this.emailInput ? 'email' : 'account';
-    this.mainPageService
-      .getCustomers(inputValue, this.searchType)
-      .subscribe((customers) => {
-        // console.log('getCustomerByEmail', customers);
+    // this.mainPageService
+    //   .getCustomers(inputValue, this.searchType)
+    //   .subscribe((customers) => {
+    //     // console.log('getCustomerByEmail', customers);
+    //     if (customers.length == 0) {
+    //       this.userNotFound = true;
+    //     }
+    //     this.customers = customers;
+    //     this.loading = false;
+    //   });
+
+
+
+    if (this.emailInput) {
+      this.mainPageService.getCustomerByEmail(this.emailInput).subscribe((emails) => {
+        if (emails.length == 0) {
+          this.userNotFound = true;
+        }
+        this.emails = emails;
+        console.log('emails', emails);
+        emails.map((e) => {
+          let customers: any;
+          const { nfmAccountId, partyEmail } = e;
+          const destructuring = {
+            nfmAccountId,
+            partyEmail,
+            customers
+          };
+          this.mainPageService.getCustomerByAccountId(e.nfmAccountId).subscribe((arg: any) => {
+            destructuring.customers = arg;
+            this.loading = false;
+          });
+          console.log('destructuring', destructuring);
+        });
+      });
+    }
+
+    if (this.accountInput) {
+      this.mainPageService.getCustomerByEmailT(this.accountInput).subscribe((r) => {
+        console.log('as', r);
+      })
+      this.mainPageService.getCustomerByAccountId(this.accountInput).subscribe((customers) => {
         if (customers.length == 0) {
           this.userNotFound = true;
         }
         this.customers = customers;
         this.loading = false;
       });
-
-    if (this.emailInput) {
-      this.mainPageService
-        .getCustomerByEmail(this.emailInput)
-        .subscribe((customers: any) => {
-          console.log('customers', customers);
-        });
     }
-
-    // if (this.customers && this.customers.length > 0) {
-    //   this.userNotFound = false;
-    // } else {
-    //   this.userNotFound = true;
-    // }
-    // this.showUserInfoSection = true;
   }
 
   getCustomerByAccountId(id: string) {

@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, filter, delay } from 'rxjs/operators';
-import { Customer, CustomerByEmail, Hero } from 'src/app/customer';
+import { map, delay } from 'rxjs/operators';
+import { Customer, CustomerByEmail } from 'src/app/customer';
 import { CUSTOMERS } from 'src/app/mock-customers';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class MainPageService {
   //   nfmAccountId: string = '';
   //   partyEmail: string = '';
   //   customers: Customer[] = [];
-  constructor() {}
+  constructor(private _http: HttpClient) { }
 
   // getCustomers(): Customer[] {
   //   return CUSTOMERS;
@@ -44,62 +45,31 @@ export class MainPageService {
     );
   }
 
-  getCustomerByEmail(email: string): Observable<Customer[]> {
+  // getCustomerByEmailT2(email: string): Observable<any> {
+  //   let headers = new Headers();
+  //   headers.append('Content-Type', 'application/json');
+  //   let baseURL = 'https://customerportal-sandbox-api.azurewebsites.net';
+
+  //   return this._http.get(baseURL + '/getcustomerinfobyaccount/', { headers: headers, search: email });
+
+  // }
+
+  getCustomerByEmailT(acc: string): Observable<any> {
     const customers = of(CUSTOMERS);
-    return customers;
-    return customers.pipe(
-      delay(500),
-      map((customers) => {
-        console.log('customers', customers);
-        return customers.filter((c) => {
-          const { nfmAccountId, partyEmail } = c;
-          const picked = {
-            nfmAccountId,
-            partyEmail,
-            customers,
-          };
-          if (c.partyEmail == email) {
-            this.getCustomerByAccountId(c.nfmAccountId).subscribe(
-              (customers) => {
-                picked.customers = customers;
-                this.resultsByEmail.push(picked);
-                console.log('picked', picked);
-              }
-            );
-          }
-          return c.partyEmail == email;
-        });
-      })
-    );
+
+    let baseURL = 'https://customerportal-sandbox-api.azurewebsites.net';
+
+    return this._http.get('https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyaccount/27079748');
+
   }
 
-  //   getCustomerByEmail(email: string): Observable<Customer[]> {
-  //     const customers = of(CUSTOMERS);
-  //     return customers.pipe(
-  //       delay(500),
-  //       map((customers) =>
-  //         customers.filter((c) => {
-  //           const { nfmAccountId, partyEmail } = c;
-  //           const picked = {
-  //             nfmAccountId,
-  //             partyEmail,
-  //             customers,
-  //           };
-  //           if (c.partyEmail == email) {
-  //             this.getCustomerByAccountId(c.nfmAccountId).subscribe(
-  //               (customers) => {
-  //                 console.log('getCustomerByAccountId', customers);
-  //                 picked.customers = customers;
-  //                 this.resultsByEmail.push(picked);
-  //                 console.log('this.resultsByEmail', this.resultsByEmail);
-  //               }
-  //             );
-  //           }
-  //           return c.partyEmail == email;
-  //         })
-  //       )
-  //     );
-  //   }
+  getCustomerByEmail(email: string): Observable<Customer[]> {
+    const customers = of(CUSTOMERS);
+    return customers.pipe(
+      delay(250),
+      map((customers) => customers.filter((c) => c.partyEmail == email))
+    );
+  }
 
   getCustomerByAccountId(id: string): Observable<Customer[]> {
     const customers = of(CUSTOMERS);
