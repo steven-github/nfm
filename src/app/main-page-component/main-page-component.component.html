@@ -148,7 +148,7 @@
         </div>
         <p *ngIf="userNotFound" class="error-message">User not found!</p>
         <mat-card-actions *ngIf="!userNotFound" class="action-button">
-            <button (click)="update_EVENT()" mat-raised-button color="primary">
+            <button (click)="update_EVENT()" mat-raised-button color="primary" disabled>
                 UPDATE
             </button>
         </mat-card-actions>
