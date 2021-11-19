@@ -137,14 +137,32 @@ export class MainPageComponent implements OnInit {
     //   });
 
     if (this.emailInput) {
+      this.emails = '';
       this.mainPageService.getCustomerByEmail(this.emailInput).subscribe(
         (response) => {
           console.log('getCustomerByEmail', response);
-          if (response.length == 0) {
-            this.userNotFound = true;
-          }
-          this.emails = response;
-          this.loading = false;
+          //   if (response.length == 0) {
+          //     this.userNotFound = true;
+          //   }
+          //   this.emails = response;
+          //   this.loading = false;
+          response.map((e: any) => {
+            let customers: any;
+            const { nfmAccountId, partyEmail } = e;
+            const destructuring = {
+              nfmAccountId,
+              partyEmail,
+              customers,
+            };
+            this.mainPageService
+              .getCustomerByAccountId(e.nfmAccountId)
+              .subscribe((arg: any) => {
+                destructuring.customers = arg;
+                console.log('destructuring', destructuring);
+                this.emails = [destructuring];
+                this.loading = false;
+              });
+          });
         },
         (error) => {
           console.log('error', error);

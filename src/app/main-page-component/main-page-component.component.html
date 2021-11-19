@@ -4,8 +4,7 @@
         <div class="horizontal-order">
             <mat-form-field class="email-input" appearance="fill">
                 <mat-label>Email</mat-label>
-                <input type="email" matInput placeholder="Ex. pat@example.com" [(ngModel)]="emailInput"
-                    (ngModelChange)="modelChangeFn($event, 'email')" name="emailInputField" />
+                <input type="email" matInput placeholder="Ex. pat@example.com" [(ngModel)]="emailInput" (ngModelChange)="modelChangeFn($event, 'email')" name="emailInputField" />
                 <button *ngIf="emailInput" matSuffix mat-icon-button aria-label="Clear" (click)="emailInput=''">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -13,8 +12,7 @@
             <p class="middle-text">OR</p>
             <mat-form-field class="account-id-input" appearance="fill">
                 <mat-label>NFM account</mat-label>
-                <input matInput placeholder="Ex. 325898524" [(ngModel)]="accountInput"
-                    (ngModelChange)="modelChangeFn($event, 'accountId')" name="accountInputField" />
+                <input matInput placeholder="Ex. 325898524" [(ngModel)]="accountInput" (ngModelChange)="modelChangeFn($event, 'accountId')" name="accountInputField" />
                 <button *ngIf="accountInput" matSuffix mat-icon-button aria-label="Clear" (click)="accountInput=''">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -43,56 +41,48 @@
         <mat-divider></mat-divider>
         <div class="vertical-order" *ngIf="searchType == 'email'">
             <mat-accordion>
-                <mat-expansion-panel *ngFor="let e of emails; let i = index" (opened)="panelOpenState = true;"
-                    (closed)="panelOpenState = false" (click)="getCustomerByAccountId(e.nfmAccountId)">
+                <mat-expansion-panel *ngFor="let e of emails; let i = index" (opened)="panelOpenState = true;" (closed)="panelOpenState = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             CUSTOMERID: {{ e.nfmAccountId }}
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{ emailInput }}
+                            {{ e.partyEmail }}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div class="horizontal-order">
-                        <div class="vertical-order" *ngFor="let customer of customersById; let i = index">
+                        <div class="vertical-order" *ngFor="let customer of e.customers; let i = index">
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Ex. Anderson" [(ngModel)]="customer.lastName"
-                                    name="addressInputField" />
+                                <input matInput placeholder="Ex. Anderson" [(ngModel)]="customer.lastName" name="addressInputField" />
                             </mat-form-field>
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>Address</mat-label>
-                                <input matInput placeholder="Ex. 1234 Dodge St."
-                                    [(ngModel)]="customer.addressLineOneText" name="addressInputField" />
+                                <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineOneText" name="addressInputField" />
                             </mat-form-field>
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>Address 2</mat-label>
-                                <input matInput placeholder="Ex. 1234 Dodge St."
-                                    [(ngModel)]="customer.addressLineTwoText" name="addressInputField" />
+                                <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineTwoText" name="addressInputField" />
                             </mat-form-field>
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>City</mat-label>
-                                <input matInput placeholder="Ex. Omaha" [(ngModel)]="customer.addressCityName"
-                                    [value]="customer.addressPostalPlusFourCode" name="cityInputField" />
+                                <input matInput placeholder="Ex. Omaha" [(ngModel)]="customer.addressCityName" [value]="customer.addressPostalPlusFourCode" name="cityInputField" />
                             </mat-form-field>
                             <mat-form-field appearance="fill" class="account-id-input">
                                 <mat-label>State</mat-label>
                                 <mat-select [(ngModel)]="customer.addressStateProvinceCode" name="stateField">
-                                    <mat-option *ngFor="let state of allStates"
-                                        [value]="customer.addressStateProvinceCode">
+                                    <mat-option *ngFor="let state of allStates" [value]="customer.addressStateProvinceCode">
                                         {{ state }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Ex. 68102" [(ngModel)]="customer.addressPostalPlusFourCode"
-                                    name="zipCodeInputField" />
+                                <input matInput placeholder="Ex. 68102" [(ngModel)]="customer.addressPostalPlusFourCode" name="zipCodeInputField" />
                             </mat-form-field>
                             <mat-form-field class="account-id-input" appearance="fill">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput placeholder="Ex. 4025448231" [(ngModel)]="customer.phoneHome"
-                                    name="phoneInputField" />
+                                <input matInput placeholder="Ex. 4025448231" [(ngModel)]="customer.phoneHome" name="phoneInputField" />
                             </mat-form-field>
                         </div>
                     </div>
@@ -100,31 +90,26 @@
             </mat-accordion>
         </div>
         <div class="horizontal-order" *ngIf="searchType == 'account'">
-            <mat-card-content *ngFor="let customer of customers; let i = index"
-                class="user-info-content horizontal-card-content">
+            <mat-card-content *ngFor="let customer of customers; let i = index" class="user-info-content horizontal-card-content">
                 <p class="user-name">
                     {{ customer.firstName }}
                     {{ customer.lastName }} - {{ customer.nfmAccountId }}
                 </p>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>Last Name</mat-label>
-                    <input matInput placeholder="Ex. Anderson" [(ngModel)]="customer.lastName"
-                        name="addressInputField" />
+                    <input matInput placeholder="Ex. Anderson" [(ngModel)]="customer.lastName" name="addressInputField" />
                 </mat-form-field>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>Address</mat-label>
-                    <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineOneText"
-                        name="addressInputField" />
+                    <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineOneText" name="addressInputField" />
                 </mat-form-field>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>Address 2</mat-label>
-                    <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineTwoText"
-                        name="addressInputField" />
+                    <input matInput placeholder="Ex. 1234 Dodge St." [(ngModel)]="customer.addressLineTwoText" name="addressInputField" />
                 </mat-form-field>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>City</mat-label>
-                    <input matInput placeholder="Ex. Omaha" [(ngModel)]="customer.addressCityName"
-                        [value]="customer.addressPostalPlusFourCode" name="cityInputField" />
+                    <input matInput placeholder="Ex. Omaha" [(ngModel)]="customer.addressCityName" [value]="customer.addressPostalPlusFourCode" name="cityInputField" />
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="account-id-input">
                     <mat-label>State</mat-label>
@@ -136,13 +121,11 @@
                 </mat-form-field>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>Zip Code</mat-label>
-                    <input matInput placeholder="Ex. 68102" [(ngModel)]="customer.addressPostalPlusFourCode"
-                        name="zipCodeInputField" />
+                    <input matInput placeholder="Ex. 68102" [(ngModel)]="customer.addressPostalPlusFourCode" name="zipCodeInputField" />
                 </mat-form-field>
                 <mat-form-field class="account-id-input" appearance="fill">
                     <mat-label>Phone Number</mat-label>
-                    <input matInput placeholder="Ex. 4025448231" [(ngModel)]="customer.phoneHome"
-                        name="phoneInputField" />
+                    <input matInput placeholder="Ex. 4025448231" [(ngModel)]="customer.phoneHome" name="phoneInputField" />
                 </mat-form-field>
             </mat-card-content>
         </div>
