@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { map, delay, retry } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { map, delay, retry, catchError } from 'rxjs/operators';
 import { Customer, CustomerByEmail } from 'src/app/customer';
 import { CUSTOMERS } from 'src/app/mock-customers';
 
@@ -9,11 +9,12 @@ import { CUSTOMERS } from 'src/app/mock-customers';
   providedIn: 'root',
 })
 export class MainPageService {
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
-  getCustomerByEmail(email: string): Observable<Customer[]> {
-    // return this._http
-    //   .get<Customer[]>(`/email/${email}`);
+  getCustomerByEmail(email: string): Observable<any> {
+    return this._http
+      .get<Customer[]>(`/email/?email=${email}`)
+      .pipe(catchError(this.errorHandler));
     const customers = of(CUSTOMERS);
     return customers.pipe(
       delay(250),
@@ -21,7 +22,10 @@ export class MainPageService {
     );
   }
 
-  getCustomerByAccountId(id: string): Observable<Customer[]> {
+  getCustomerByAccountId(id: string): Observable<any[]> {
+    return this._http
+      .get<Customer[]>(`/account/${id}`)
+      .pipe(catchError(this.errorHandler));
     const customers = of(CUSTOMERS);
     return customers.pipe(
       delay(0),
@@ -31,5 +35,9 @@ export class MainPageService {
         })
       )
     );
+  }
+
+  errorHandler(error: HttpErrorResponse) {
+    return throwError(error.message || 'server error.');
   }
 }

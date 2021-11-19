@@ -1,14 +1,20 @@
 {
-  "/email/*": {
-    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyemail/?email=",
+  "/email": {
+    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyemail",
     "secure": true,
     "logLevel": "info",
+    "pathRewrite": {
+      "^/email": ""
+    },
     "changeOrigin": true
   },
-  "/account/*": {
-    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyaccount/",
+  "/account": {
+    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyaccount",
     "secure": true,
     "logLevel": "info",
+    "pathRewrite": {
+      "^/account": ""
+    },
     "changeOrigin": true
   }
 }
