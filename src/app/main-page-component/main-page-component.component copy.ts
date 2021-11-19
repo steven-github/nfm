@@ -136,30 +136,43 @@ export class MainPageComponent implements OnInit {
     //     this.loading = false;
     //   });
 
+
+
     if (this.emailInput) {
-      this.mainPageService
-        .getCustomerByEmail(this.emailInput)
-        .subscribe((emails) => {
-          console.log('getCustomerByEmail', emails);
-          if (emails.length == 0) {
-            this.userNotFound = true;
-          }
-          this.emails = emails;
-          this.loading = false;
+      this.mainPageService.getCustomerByEmail(this.emailInput).subscribe((emails) => {
+        if (emails.length == 0) {
+          this.userNotFound = true;
+        }
+        this.emails = emails;
+        console.log('emails', emails);
+        emails.map((e) => {
+          let customers: any;
+          const { nfmAccountId, partyEmail } = e;
+          const destructuring = {
+            nfmAccountId,
+            partyEmail,
+            customers
+          };
+          this.mainPageService.getCustomerByAccountId(e.nfmAccountId).subscribe((arg: any) => {
+            destructuring.customers = arg;
+            this.loading = false;
+          });
+          console.log('destructuring', destructuring);
         });
+      });
     }
 
     if (this.accountInput) {
-      this.mainPageService
-        .getCustomerByAccountId(this.accountInput)
-        .subscribe((customers) => {
-          console.log('getCustomerByAccountId', customers);
-          if (customers.length == 0) {
-            this.userNotFound = true;
-          }
-          this.customers = customers;
-          this.loading = false;
-        });
+      this.mainPageService.getCustomerByEmailT(this.accountInput).subscribe((r) => {
+        console.log('as', r);
+      })
+      this.mainPageService.getCustomerByAccountId(this.accountInput).subscribe((customers) => {
+        if (customers.length == 0) {
+          this.userNotFound = true;
+        }
+        this.customers = customers;
+        this.loading = false;
+      });
     }
   }
 

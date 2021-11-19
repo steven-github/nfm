@@ -1,6 +1,6 @@
 {
   "/email/*": {
-    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyemail/",
+    "target": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyemail/?email=",
     "secure": true,
     "logLevel": "info",
     "changeOrigin": true

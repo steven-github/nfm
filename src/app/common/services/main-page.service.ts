@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, delay, retry } from 'rxjs/operators';
@@ -9,27 +9,27 @@ import { CUSTOMERS } from 'src/app/mock-customers';
   providedIn: 'root',
 })
 export class MainPageService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   getCustomerByEmail(email: string): Observable<Customer[]> {
-    return this._http
-      .get<any>('/email/', { params: { email: email } })
-      .pipe(retry(3));
+    // return this._http
+    //   .get<Customer[]>(`/email/${email}`);
+    const customers = of(CUSTOMERS);
+    return customers.pipe(
+      delay(250),
+      map((customers) => customers.filter((c) => c.partyEmail?.includes(email)))
+    );
   }
 
   getCustomerByAccountId(id: string): Observable<Customer[]> {
-    return this._http.get<Customer[]>(`/account/${id}`);
+    const customers = of(CUSTOMERS);
+    return customers.pipe(
+      delay(0),
+      map((customers) =>
+        customers.filter((c) => {
+          return c.nfmAccountId == id;
+        })
+      )
+    );
   }
-
-  //   getCustomerByAccountId(id: string): Observable<Customer[]> {
-  //     const customers = of(CUSTOMERS);
-  //     return customers.pipe(
-  //       delay(0),
-  //       map((customers) =>
-  //         customers.filter((c) => {
-  //           return c.nfmAccountId == id;
-  //         })
-  //       )
-  //     );
-  //   }
 }

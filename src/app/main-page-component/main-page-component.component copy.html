@@ -6,18 +6,12 @@
                 <mat-label>Email</mat-label>
                 <input type="email" matInput placeholder="Ex. pat@example.com" [(ngModel)]="emailInput"
                     (ngModelChange)="modelChangeFn($event, 'email')" name="emailInputField" />
-                <button *ngIf="emailInput" matSuffix mat-icon-button aria-label="Clear" (click)="emailInput=''">
-                    <mat-icon>close</mat-icon>
-                </button>
             </mat-form-field>
             <p class="middle-text">OR</p>
             <mat-form-field class="account-id-input" appearance="fill">
                 <mat-label>NFM account</mat-label>
                 <input matInput placeholder="Ex. 325898524" [(ngModel)]="accountInput"
                     (ngModelChange)="modelChangeFn($event, 'accountId')" name="accountInputField" />
-                <button *ngIf="accountInput" matSuffix mat-icon-button aria-label="Clear" (click)="accountInput=''">
-                    <mat-icon>close</mat-icon>
-                </button>
             </mat-form-field>
         </div>
     </form>
@@ -50,7 +44,7 @@
                             CUSTOMERID: {{ e.nfmAccountId }}
                         </mat-panel-title>
                         <mat-panel-description>
-                            {{ emailInput }}
+                            {{ e.partyEmail }}
                         </mat-panel-description>
                     </mat-expansion-panel-header>
                     <div class="horizontal-order">
