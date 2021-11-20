@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "5db9b402-ae7e-4d4a-a826-3813b43612c6",
+		"name": "NFM Customer Portal Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Customer Info By Account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyaccount/9668146",
+					"protocol": "https",
+					"host": [
+						"customerportal-sandbox-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"getcustomerinfobyaccount",
+						"9668146"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer Info By Email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://customerportal-sandbox-api.azurewebsites.net/getcustomerinfobyemail/?email=filterspec@gmail.com",
+					"protocol": "https",
+					"host": [
+						"customerportal-sandbox-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"getcustomerinfobyemail",
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "filterspec@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Customer Info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"NFMAccountId\":\"9668146\",\r\n\"Id\":82,\r\n\"PartyId\":505,\r\n\"FirstName\" :\"MARK\",\r\n\"MiddleName\" :\"\",\r\n\"LastName\" :\"ELLIS\",\r\n\"AddressLineOneText\" :\"2311 S 147TH ST\",\r\n\"AddressLineTwoText\" :\"\",\r\n\"AddressCityName\" :\"OMAHA\",\r\n\"AddressStateProvinceCode\" :\"NE\",\r\n\"AddressCountryCode\" :\"USA\",\r\n\"PhoneWork\" :\"68121,4029600482\",\r\n\"PhoneHome\" :\"18689,4029600482\",\r\n\"PhoneMobile\" :\"null\",\r\n\"PEmail\" :\"32,filterspec@gmail.com\",\r\n\"JEmail\" :\"null\",\r\n\"AddressPostalPlusFourCode\": \"68144-2047\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://customerportal-sandbox-api.azurewebsites.net/UpdateCustomerInfo/",
+					"protocol": "https",
+					"host": [
+						"customerportal-sandbox-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"UpdateCustomerInfo",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
