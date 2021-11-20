@@ -11,7 +11,7 @@ import { CUSTOMERS } from 'src/app/mock-customers';
 export class MainPageService {
   resultsByEmail: CustomerByEmail[] = [];
   //   nfmAccountId: string = '';
-  //   partyEmail: string = '';
+  //   pEmail: string = '';
   //   customers: Customer[] = [];
   constructor(private _http: HttpClient) { }
 
@@ -37,7 +37,7 @@ export class MainPageService {
       map((customers: any[]) =>
         customers.filter((c) => {
           if (type == 'email') {
-            return c.partyEmail == val;
+            return c.pEmail == val;
           }
           return c.nfmAccountId == val;
         })
@@ -67,7 +67,7 @@ export class MainPageService {
     const customers = of(CUSTOMERS);
     return customers.pipe(
       delay(250),
-      map((customers) => customers.filter((c) => c.partyEmail?.includes(email)))
+      map((customers) => customers.filter((c) => c.pEmail?.includes(email)))
     );
   }
 

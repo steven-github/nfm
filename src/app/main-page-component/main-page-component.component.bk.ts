@@ -150,10 +150,10 @@ export class MainPageComponent implements OnInit {
       //     console.log('emails', emails);
       //     emails.map((e) => {
       //       let customers: any;
-      //       const { nfmAccountId, partyEmail } = e;
+      //       const { nfmAccountId, pEmail } = e;
       //       const destructuring = {
       //         nfmAccountId,
-      //         partyEmail,
+      //         pEmail,
       //         customers
       //       };
       //       this.mainPageService.getCustomerByAccountId(e.nfmAccountId).subscribe((arg: any) => {

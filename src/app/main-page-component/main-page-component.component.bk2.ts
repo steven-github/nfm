@@ -120,6 +120,7 @@ export class MainPageComponent implements OnInit {
     //   );
     // });
 
+
     Object.keys(data[0].customers).forEach((value, i, array) => {
       controlArray.push(
         this.formBuilder.group({

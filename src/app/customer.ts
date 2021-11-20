@@ -1,5 +1,6 @@
 export interface Customer {
   nfmAccountId: string;
+  accountPartyType: string | null;
   accountId: number;
   partyId: number;
   partyTypeId: number;
@@ -19,12 +20,13 @@ export interface Customer {
   addressCountryCode: string | null;
   phoneWork: string | null;
   phoneHome: string | null;
-  partyEmail: string | null;
+  pEmail: string | null;
+  jEmail: string | null;
   errorMsg: string | null;
 }
 
 export interface CustomerByEmail {
   nfmAccountId: string;
-  partyEmail: string | null;
+  pEmail: string | null;
   customers: Customer[];
 }

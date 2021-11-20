@@ -13,6 +13,9 @@ import { MainPageComponent } from './main-page-component/main-page-component.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageService } from './common/services/main-page.service';
 import { HttpClientModule } from '@angular/common/http';
+import { EmailPipe } from './common/pipes/email.pipe';
+import { EmailIDPipe } from './common/pipes/email-id.pipe';
+import { EmailStringPipe } from './common/pipes/email-string.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
     SmallComponentExampleComponent,
     MainPageHeaderComponent,
     MainPageComponent,
+    EmailPipe,
+    EmailIDPipe,
+    EmailStringPipe,
   ],
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, MaterialModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [MainPageService],

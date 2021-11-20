@@ -11,7 +11,7 @@ import { CUSTOMERS } from 'src/app/mock-customers';
 export class MainPageService {
   resultsByEmail: CustomerByEmail[] = [];
   //   nfmAccountId: string = '';
-  //   partyEmail: string = '';
+  //   pEmail: string = '';
   //   customers: Customer[] = [];
   constructor(private _http: HttpClient) {}
 
@@ -30,20 +30,20 @@ export class MainPageService {
   //   // return customers;
   // }
 
-  getCustomers(val: string, type: string): Observable<Customer[]> {
-    const customers = of(CUSTOMERS);
-    return customers.pipe(
-      delay(500),
-      map((customers: any[]) =>
-        customers.filter((c) => {
-          if (type == 'email') {
-            return c.partyEmail == val;
-          }
-          return c.nfmAccountId == val;
-        })
-      )
-    );
-  }
+  // getCustomers(val: string, type: string): Observable<Customer[]> {
+  //   const customers = of(CUSTOMERS);
+  //   return customers.pipe(
+  //     delay(500),
+  //     map((customers: any[]) =>
+  //       customers.filter((c) => {
+  //         if (type == 'email') {
+  //           return c.pEmail == val;
+  //         }
+  //         return c.nfmAccountId == val;
+  //       })
+  //     )
+  //   );
+  // }
 
   // getCustomerByEmailT2(email: string): Observable<any> {
   //   let headers = new Headers();
@@ -63,7 +63,7 @@ export class MainPageService {
   //     const customers = of(CUSTOMERS);
   //     return customers.pipe(
   //       delay(250),
-  //       map((customers) => customers.filter((c) => c.partyEmail == email))
+  //       map((customers) => customers.filter((c) => c.pEmail == email))
   //     );
   //   }
 

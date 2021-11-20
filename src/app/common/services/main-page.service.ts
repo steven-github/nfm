@@ -18,7 +18,7 @@ export class MainPageService {
     const customers = of(CUSTOMERS);
     return customers.pipe(
       delay(250),
-      map((customers) => customers.filter((c) => c.partyEmail?.includes(email)))
+      map((customers) => customers.filter((c) => c.pEmail?.includes(email)))
     );
   }
 
