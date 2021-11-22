@@ -128,10 +128,10 @@
                                     <input formControlName="AddressCityName" matInput
                                         [value]="customer.addressCityName" />
                                 </mat-form-field>
-                                <mat-form-field appearance="fill" class="account-id-input">
+                                <mat-form-field appearance="fill" class="account-id-input disabled">
                                     <mat-label>State</mat-label>
                                     <mat-select formControlName="AddressStateProvinceCode"
-                                        [(value)]="customer.addressStateProvinceCode" [disabled]="true">
+                                        [(value)]="customer.addressStateProvinceCode">
                                         <mat-option></mat-option>
                                         <mat-option *ngFor="let state of allStates"
                                             [value]="customer.addressStateProvinceCode">
@@ -183,7 +183,7 @@
                 <button *ngIf="!formControlState(i)" (click)="toggleEdit(i)">Save</button> -->
                             </div>
                         </div>
-                        <button (click)="update_EVENT()" mat-raised-button color="primary">
+                        <button (click)="update_EVENT()" mat-raised-button color="primary" *ngIf="!userNotFound">
                             UPDATE
                         </button>
                     </form>
@@ -262,10 +262,10 @@
                             <mat-label>City Name</mat-label>
                             <input formControlName="AddressCityName" matInput [value]="customer.addressCityName" />
                         </mat-form-field>
-                        <mat-form-field appearance="fill" class="account-id-input">
+                        <mat-form-field appearance="fill" class="account-id-input disabled">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="AddressStateProvinceCode"
-                                [(value)]="customer.addressStateProvinceCode" [disabled]="true">
+                                [(value)]="customer.addressStateProvinceCode">
                                 <mat-option></mat-option>
                                 <mat-option *ngFor="let state of allStates" [value]="customer.addressStateProvinceCode">
                                     {{ state }}
@@ -315,16 +315,16 @@
             <button *ngIf="!formControlState(i)" (click)="toggleEdit(i)">Save</button> -->
                     </div>
                 </div>
-                <button (click)="update_EVENT()" mat-raised-button color="primary">
+                <button (click)="update_EVENT()" mat-raised-button color="primary" *ngIf="!userNotFound">
                     UPDATE
                 </button>
             </form>
         </div>
         <p *ngIf="userNotFound" class="error-message">User not found!</p>
-        <mat-card-actions *ngIf="!userNotFound" class="action-button">
-            <!-- <button (click)="update_EVENT()" mat-raised-button color="primary" disabled>
-        UPDATE
-      </button> -->
-        </mat-card-actions>
+        <!-- <mat-card-actions *ngIf="!userNotFound" class="action-button">
+            <button (click)="update_EVENT()" mat-raised-button color="primary" disabled>
+                UPDATE
+            </button>
+        </mat-card-actions> -->
     </div>
 </mat-card>
