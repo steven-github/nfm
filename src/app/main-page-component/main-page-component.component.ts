@@ -274,7 +274,7 @@ export class MainPageComponent implements OnInit {
     this.loading = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   modelChangeFn(e: any, type: any) {
     if (type == 'email') {
