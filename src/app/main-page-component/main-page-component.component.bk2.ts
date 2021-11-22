@@ -78,13 +78,16 @@ export class MainPageComponent implements OnInit {
   customers: Customer[] = [];
   customersById: Customer[] = [];
   searchType: string;
-  thisIsMyForm: FormGroup;
+  myForm: FormGroup;
   // data = [
   //   { firstName: "one", middleName: "two", lastName: "three", addressLineOneText: "three", addressLineTwoText: "three", addressCityName: "three", addressStateProvinceCode: "three", addressPostalPlusFourCode: "three", addressCountryCode: "three", phoneWork: "three", phoneHome: "three", pEmail: "three", jEmail: "three" },
   // ];
-  data: any
+  data: any;
 
-  constructor(private mainPageService: MainPageService, private formBuilder: FormBuilder) {
+  constructor(
+    private mainPageService: MainPageService,
+    private formBuilder: FormBuilder
+  ) {
     this.accountInput = '';
     this.emailInput = '';
 
@@ -96,14 +99,14 @@ export class MainPageComponent implements OnInit {
     this.zipCode = 0;
     this.phoneNumber = 0;
     this.searchType = 'email';
-    this.thisIsMyForm = new FormGroup({
-      formArrayName: this.formBuilder.array([])
+    this.myForm = new FormGroup({
+      formArrayName: this.formBuilder.array([]),
     });
     // this.buildForm();
   }
 
   buildForm(data: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
+    const controlArray = this.myForm.get('formArrayName') as FormArray;
     // this.data = [
     //   { firstName: 'one', type: 'one' },
     //   { firstName: 'two', type: 'two' },
@@ -120,23 +123,61 @@ export class MainPageComponent implements OnInit {
     //   );
     // });
 
-
     Object.keys(data[0].customers).forEach((value, i, array) => {
       controlArray.push(
         this.formBuilder.group({
-          firstName: new FormControl({ value: data[0].customers[i].firstName, disabled: true }),
-          middleName: new FormControl({ value: data[0].customers[i].middleName, disabled: true }),
-          lastName: new FormControl({ value: data[0].customers[i].lastName, disabled: true }),
-          addressLineOneText: new FormControl({ value: data[0].customers[i].addressLineOneText, disabled: true }),
-          addressLineTwoText: new FormControl({ value: data[0].customers[i].addressLineTwoText, disabled: true }),
-          addressCityName: new FormControl({ value: data[0].customers[i].addressCityName, disabled: true }),
-          addressStateProvinceCode: new FormControl({ value: data[0].customers[i].addressStateProvinceCode, disabled: true }),
-          addressPostalPlusFourCode: new FormControl({ value: data[0].customers[i].addressPostalPlusFourCode, disabled: true }),
-          addressCountryCode: new FormControl({ value: data[0].customers[i].addressCountryCode, disabled: true }),
-          phoneWork: new FormControl({ value: data[0].customers[i].phoneWork, disabled: true }),
-          phoneHome: new FormControl({ value: data[0].customers[i].phoneHome, disabled: true }),
-          pEmail: new FormControl({ value: data[0].customers[i].pEmail, disabled: true }),
-          jEmail: new FormControl({ value: data[0].customers[i].jEmail, disabled: true })
+          firstName: new FormControl({
+            value: data[0].customers[i].firstName,
+            disabled: true,
+          }),
+          middleName: new FormControl({
+            value: data[0].customers[i].middleName,
+            disabled: true,
+          }),
+          lastName: new FormControl({
+            value: data[0].customers[i].lastName,
+            disabled: true,
+          }),
+          addressLineOneText: new FormControl({
+            value: data[0].customers[i].addressLineOneText,
+            disabled: true,
+          }),
+          addressLineTwoText: new FormControl({
+            value: data[0].customers[i].addressLineTwoText,
+            disabled: true,
+          }),
+          addressCityName: new FormControl({
+            value: data[0].customers[i].addressCityName,
+            disabled: true,
+          }),
+          addressStateProvinceCode: new FormControl({
+            value: data[0].customers[i].addressStateProvinceCode,
+            disabled: true,
+          }),
+          addressPostalPlusFourCode: new FormControl({
+            value: data[0].customers[i].addressPostalPlusFourCode,
+            disabled: true,
+          }),
+          addressCountryCode: new FormControl({
+            value: data[0].customers[i].addressCountryCode,
+            disabled: true,
+          }),
+          phoneWork: new FormControl({
+            value: data[0].customers[i].phoneWork,
+            disabled: true,
+          }),
+          phoneHome: new FormControl({
+            value: data[0].customers[i].phoneHome,
+            disabled: true,
+          }),
+          pEmail: new FormControl({
+            value: data[0].customers[i].pEmail,
+            disabled: true,
+          }),
+          jEmail: new FormControl({
+            value: data[0].customers[i].jEmail,
+            disabled: true,
+          }),
         })
       );
     });
@@ -259,17 +300,17 @@ export class MainPageComponent implements OnInit {
   }
 
   toggleEdit(i: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
+    const controlArray = this.myForm.get('formArrayName') as FormArray;
     if (controlArray.controls[i].status === 'DISABLED') {
-      controlArray.controls[i].enable()
+      controlArray.controls[i].enable();
     } else {
-      controlArray.controls[i].disable()
+      controlArray.controls[i].disable();
     }
   }
 
   formControlState(i: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
-    return controlArray.controls[i].disabled
+    const controlArray = this.myForm.get('formArrayName') as FormArray;
+    return controlArray.controls[i].disabled;
   }
 
   update_EVENT() {
@@ -277,6 +318,6 @@ export class MainPageComponent implements OnInit {
       'This is the request object should be sent to the backend to update the information in database',
       this.loadedUserInfo
     );
-    console.log(this.thisIsMyForm.value);
+    console.log(this.myForm.value);
   }
 }

@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { STATES } from '../common/constants/main-page.constants';
 import { MainPageService } from '../common/services/main-page.service';
@@ -15,6 +21,7 @@ export class MainPageComponent implements OnInit {
   userNotFound = false;
   showUserInfoSection = false;
   loading = false;
+  updating = false;
   panelOpenState = false;
 
   emailInput: string;
@@ -74,17 +81,17 @@ export class MainPageComponent implements OnInit {
 
   loadedUserInfo: any;
   emails: any;
+  customersByEmail: CustomerByEmail[] = [];
   accounts: any;
   customers: Customer[] = [];
   customersById: Customer[] = [];
   searchType: string;
-  thisIsMyForm: FormGroup;
-  // data = [
-  //   { firstName: "one", middleName: "two", lastName: "three", addressLineOneText: "three", addressLineTwoText: "three", addressCityName: "three", addressStateProvinceCode: "three", addressPostalPlusFourCode: "three", addressCountryCode: "three", phoneWork: "three", phoneHome: "three", pEmail: "three", jEmail: "three" },
-  // ];
-  data: any
+  myForm: FormGroup;
 
-  constructor(private mainPageService: MainPageService, private formBuilder: FormBuilder) {
+  constructor(
+    private mainPageService: MainPageService,
+    private formBuilder: FormBuilder
+  ) {
     this.accountInput = '';
     this.emailInput = '';
 
@@ -96,61 +103,178 @@ export class MainPageComponent implements OnInit {
     this.zipCode = 0;
     this.phoneNumber = 0;
     this.searchType = 'email';
-    this.thisIsMyForm = new FormGroup({
-      formArrayName: this.formBuilder.array([])
+    this.myForm = new FormGroup({
+      formArray: this.formBuilder.array([]),
     });
     // this.buildForm();
   }
 
   buildForm(data: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
-    // this.data = [
-    //   { firstName: 'one', type: 'one' },
-    //   { firstName: 'two', type: 'two' },
-    //   { firstName: 'three', type: 'three' },
-    // ];
-
-    // console.log(controlArray.controls);
-    // Object.keys(this.data).forEach((i: any) => {
-    //   controlArray.push(
-    //     this.formBuilder.group({
-    //       firstName: new FormControl({ value: this.data[i].firstName, disabled: true }),
-    //       type: new FormControl({ value: this.data[i].type, disabled: true }),
-    //     })
-    //   );
-    // });
-
-    Object.keys(data[0].customers).forEach((value, i, array) => {
+    this.myForm = new FormGroup({
+      formArray: this.formBuilder.array([]),
+    });
+    const controlArray = this.myForm.get('formArray') as FormArray;
+    Object.keys(data.customers).forEach((value, i, array) => {
       controlArray.push(
         this.formBuilder.group({
-          firstName: new FormControl({ value: data[0].customers[i].firstName, disabled: true }),
-          middleName: new FormControl({ value: data[0].customers[i].middleName, disabled: true }),
-          lastName: new FormControl({ value: data[0].customers[i].lastName, disabled: true }),
-          addressLineOneText: new FormControl({ value: data[0].customers[i].addressLineOneText, disabled: true }),
-          addressLineTwoText: new FormControl({ value: data[0].customers[i].addressLineTwoText, disabled: true }),
-          addressCityName: new FormControl({ value: data[0].customers[i].addressCityName, disabled: true }),
-          addressStateProvinceCode: new FormControl({ value: data[0].customers[i].addressStateProvinceCode, disabled: true }),
-          addressPostalPlusFourCode: new FormControl({ value: data[0].customers[i].addressPostalPlusFourCode, disabled: true }),
-          addressCountryCode: new FormControl({ value: data[0].customers[i].addressCountryCode, disabled: true }),
-          phoneWork: new FormControl({ value: data[0].customers[i].phoneWork, disabled: true }),
-          phoneHome: new FormControl({ value: data[0].customers[i].phoneHome, disabled: true }),
-          pEmail: new FormControl({ value: data[0].customers[i].pEmail, disabled: true }),
-          jEmail: new FormControl({ value: data[0].customers[i].jEmail, disabled: true })
+          NFMAccountId: new FormControl({
+            value: data.customers[i].nfmAccountId,
+            disabled: false,
+          }),
+          Id: new FormControl({
+            value: data.customers[i].accountId,
+            disabled: false,
+          }),
+          partyId: new FormControl({
+            value: data.customers[i].partyId,
+            disabled: false,
+          }),
+          partyTypeId: new FormControl({
+            value: data.customers[i].partyTypeId,
+            disabled: false,
+          }),
+          accountPartyType: new FormControl({
+            value: data.customers[i].accountPartyType,
+            disabled: false,
+          }),
+          partyTypeName: new FormControl({
+            value: data.customers[i].partyTypeName,
+            disabled: false,
+          }),
+          FirstName: new FormControl(
+            {
+              value: data.customers[i].firstName
+                ? data.customers[i].firstName
+                : '',
+              disabled: false,
+            },
+            [Validators.required]
+          ),
+          MiddleName: new FormControl({
+            value: data.customers[i].middleName
+              ? data.customers[i].middleName
+              : '',
+            disabled: false,
+          }),
+          LastName: new FormControl({
+            value: data.customers[i].lastName ? data.customers[i].lastName : '',
+            disabled: false,
+          }),
+          dateOfBirth: new FormControl({
+            value: data.customers[i].dateOfBirth
+              ? data.customers[i].dateOfBirth
+              : '',
+            disabled: true,
+          }),
+          OccupationName: new FormControl({
+            value: data.customers[i].occupationName
+              ? data.customers[i].occupationName
+              : '',
+            disabled: true,
+          }),
+          EmployerName: new FormControl({
+            value: data.customers[i].employerName
+              ? data.customers[i].employerName
+              : '',
+            disabled: true,
+          }),
+          AddressLineOneText: new FormControl({
+            value: data.customers[i].addressLineOneText
+              ? data.customers[i].addressLineOneText
+              : '',
+            disabled: false,
+          }),
+          AddressLineTwoText: new FormControl({
+            value: data.customers[i].addressLineTwoText
+              ? data.customers[i].addressLineTwoText
+              : '',
+            disabled: false,
+          }),
+          AddressCityName: new FormControl({
+            value: data.customers[i].addressCityName
+              ? data.customers[i].addressCityName
+              : '',
+            disabled: false,
+          }),
+          AddressStateProvinceCode: new FormControl({
+            value: data.customers[i].addressStateProvinceCode
+              ? data.customers[i].addressStateProvinceCode
+              : '',
+            disabled: false,
+          }),
+          addressPostalPlusFourCode: new FormControl({
+            value: data.customers[i].addressPostalPlusFourCode
+              ? data.customers[i].addressPostalPlusFourCode
+              : '',
+            disabled: false,
+          }),
+          AddressCountryCode: new FormControl({
+            value: data.customers[i].addressStateProvinceCode
+              ? data.customers[i].addressStateProvinceCode
+              : '',
+            disabled: false,
+          }),
+          PhoneWork: new FormControl({
+            value: data.customers[i].phoneWork
+              ? data.customers[i].phoneWork
+              : '',
+            disabled: false,
+          }),
+          PhoneHome: new FormControl({
+            value: data.customers[i].phoneHome
+              ? data.customers[i].phoneHome
+              : '',
+            disabled: false,
+          }),
+          PhoneMobile: new FormControl({
+            value: data.customers[i].phoneMobile
+              ? data.customers[i].phoneMobile
+              : '',
+            disabled: false,
+          }),
+          pEmail: new FormControl({
+            value: data.customers[i].pEmail ? data.customers[i].pEmail : '',
+            disabled: false,
+          }),
+          pEmailId: new FormControl({
+            value: data.customers[i].pEmail
+              ? data.customers[i].pEmail.split(',')[0]
+              : '',
+            disabled:
+              data.customers[i].accountPartyType != 'Primary' ? true : false,
+          }),
+          pEmailString: new FormControl({
+            value: data.customers[i].pEmail
+              ? data.customers[i].pEmail.split(',')[1]
+              : '',
+            disabled:
+              data.customers[i].accountPartyType != 'Primary' ? true : false,
+          }),
+          jEmail: new FormControl({
+            value: data.customers[i].jEmail ? data.customers[i].jEmail : '',
+            disabled: false,
+          }),
+          jEmailId: new FormControl({
+            value: data.customers[i].jEmail
+              ? data.customers[i].jEmail.split(',')[0]
+              : '',
+            disabled:
+              data.customers[i].accountPartyType != 'Joint' ? true : false,
+          }),
+          jEmailString: new FormControl({
+            value: data.customers[i].jEmail
+              ? data.customers[i].jEmail.split(',')[1]
+              : '',
+            disabled:
+              data.customers[i].accountPartyType != 'Joint' ? true : false,
+          }),
         })
       );
     });
-
     this.loading = false;
   }
 
-  ngOnInit(): void {
-    // this.getCustomers();
-  }
-
-  getCustomers(): void {
-    // this.customers = this.mainPageService.getCustomers();
-    // console.log('customers', this.customers);
-  }
+  ngOnInit(): void {}
 
   modelChangeFn(e: any, type: any) {
     if (type == 'email') {
@@ -174,47 +298,20 @@ export class MainPageComponent implements OnInit {
     // this.loadedUserInfo = this.userInfo; // this object should be populated by backend response -- single user example
     // this.loadedUserInfo = this.jointUserInfo; // this object should be populated by backend response -- joint user example
 
-    // const inputValue = this.emailInput ? this.emailInput : this.accountInput;
     this.searchType = this.emailInput ? 'email' : 'account';
-    // this.mainPageService
-    //   .getCustomers(inputValue, this.searchType)
-    //   .subscribe((customers) => {
-    //     // console.log('getCustomerByEmail', customers);
-    //     if (customers.length == 0) {
-    //       this.userNotFound = true;
-    //     }
-    //     this.customers = customers;
-    //     this.loading = false;
-    //   });
 
     if (this.emailInput) {
-      this.emails = '';
+      this.emails = [];
       this.mainPageService.getCustomerByEmail(this.emailInput).subscribe(
         (response) => {
           console.log('getCustomerByEmail', response);
-          //   if (response.length == 0) {
-          //     this.userNotFound = true;
-          //   }
-          //   this.emails = response;
-          //   this.loading = false;
-          response.map((e: any) => {
-            let customers: any;
-            const { nfmAccountId, pEmail } = e;
-            const destructuring = {
-              nfmAccountId,
-              pEmail,
-              customers,
-            };
-            this.mainPageService
-              .getCustomerByAccountId(e.nfmAccountId)
-              .subscribe((arg: any) => {
-                destructuring.customers = arg;
-                console.log('destructuring', destructuring);
-                this.emails = [destructuring];
-                this.buildForm(this.emails);
-                // this.loading = false;
-              });
-          });
+          let customers = {
+            nfmAccountId: response[0].nfmAccountId,
+            email: this.emailInput,
+            customers: response,
+          };
+          this.emails = [customers];
+          this.buildForm(customers);
         },
         (error) => {
           console.log('error', error);
@@ -226,14 +323,16 @@ export class MainPageComponent implements OnInit {
     }
 
     if (this.accountInput) {
+      this.customers = [];
       this.mainPageService.getCustomerByAccountId(this.accountInput).subscribe(
         (response) => {
           console.log('getCustomerByAccountId', response);
-          if (response.length == 0) {
-            this.userNotFound = true;
-          }
+          let customers = {
+            nfmAccountId: response[0].nfmAccountId,
+            customers: response,
+          };
           this.customers = response;
-          this.loading = false;
+          this.buildForm(customers);
         },
         (error) => {
           console.log('error', error);
@@ -248,7 +347,6 @@ export class MainPageComponent implements OnInit {
   getCustomerByAccountId(id: string) {
     console.log('ID:', id);
     this.mainPageService.getCustomerByAccountId(id).subscribe((customers) => {
-      //   console.log('getCustomerByAccountId', customers);
       this.customersById = customers;
     });
   }
@@ -257,25 +355,12 @@ export class MainPageComponent implements OnInit {
     console.log('email', email);
   }
 
-  toggleEdit(i: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
-    if (controlArray.controls[i].status === 'DISABLED') {
-      controlArray.controls[i].enable()
-    } else {
-      controlArray.controls[i].disable()
-    }
-  }
-
-  formControlState(i: any) {
-    const controlArray = this.thisIsMyForm.get('formArrayName') as FormArray;
-    return controlArray.controls[i].disabled
-  }
-
   update_EVENT() {
-    console.log(
-      'This is the request object should be sent to the backend to update the information in database',
-      this.loadedUserInfo
-    );
-    console.log(this.thisIsMyForm.value);
+    this.updating = true;
+    let form = this.myForm.get('formArray');
+    this.mainPageService.updateCustomers(form);
+    setTimeout(() => {
+      this.updating = false;
+    }, 1500);
   }
 }

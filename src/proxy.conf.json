@@ -16,5 +16,14 @@
       "^/account": ""
     },
     "changeOrigin": true
+  },
+  "/save": {
+    "target": "https://customerportal-sandbox-api.azurewebsites.net/UpdateCustomerInfo",
+    "secure": true,
+    "logLevel": "info",
+    "pathRewrite": {
+      "^/save": ""
+    },
+    "changeOrigin": true
   }
 }

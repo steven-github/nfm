@@ -37,6 +37,29 @@ export class MainPageService {
     );
   }
 
+  updateCustomers(form: any) {
+    form.controls.forEach((form: any) => {
+      if (form.status == 'VALID' && form.touched == true) {
+        if (form.value.accountPartyType == 'Primary') {
+          form.value.pEmail =
+            form.value.pEmailId + ',' + form.value.pEmailString;
+        }
+        if (form.value.accountPartyType == 'Joint') {
+          form.value.jEmail =
+            form.value.jEmailId + ',' + form.value.jEmailString;
+        }
+        this._http
+          .post<Customer[]>(`/save`, form.value)
+          .pipe(catchError(this.errorHandler))
+          .subscribe((response) => {
+            console.log('response', response);
+          });
+      }
+    });
+    // const customers = of(CUSTOMERS);
+    // return customers;
+  }
+
   errorHandler(error: HttpErrorResponse) {
     return throwError(error.message || 'server error.');
   }
