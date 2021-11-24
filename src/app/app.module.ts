@@ -13,7 +13,6 @@ import { MainPageComponent } from './main-page-component/main-page-component.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainPageService } from './common/services/main-page.service';
 import { HttpClientModule } from '@angular/common/http';
-import { EmailPipe } from './common/pipes/email.pipe';
 import { EmailIDPipe } from './common/pipes/email-id.pipe';
 import { EmailStringPipe } from './common/pipes/email-string.pipe';
 
@@ -25,7 +24,6 @@ import { EmailStringPipe } from './common/pipes/email-string.pipe';
     SmallComponentExampleComponent,
     MainPageHeaderComponent,
     MainPageComponent,
-    EmailPipe,
     EmailIDPipe,
     EmailStringPipe,
   ],

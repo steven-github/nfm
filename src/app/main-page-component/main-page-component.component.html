@@ -25,7 +25,7 @@
         At least one input is required!
     </p>
     <mat-card-actions class="action-button">
-        <button (click)="lookup_EVENT()" mat-raised-button color="primary">
+        <button (click)="lookupEvent()" mat-raised-button color="primary">
             VIEW
         </button>
     </mat-card-actions>
@@ -183,7 +183,7 @@
                 <button *ngIf="!formControlState(i)" (click)="toggleEdit(i)">Save</button> -->
                             </div>
                         </div>
-                        <button (click)="update_EVENT()" mat-raised-button color="primary" *ngIf="!userNotFound">
+                        <button (click)="updateEvent()" mat-raised-button color="primary" *ngIf="!userNotFound">
                             UPDATE
                         </button>
                     </form>
@@ -315,14 +315,14 @@
             <button *ngIf="!formControlState(i)" (click)="toggleEdit(i)">Save</button> -->
                     </div>
                 </div>
-                <button (click)="update_EVENT()" mat-raised-button color="primary" *ngIf="!userNotFound">
+                <button (click)="updateEvent()" mat-raised-button color="primary" *ngIf="!userNotFound">
                     UPDATE
                 </button>
             </form>
         </div>
         <p *ngIf="userNotFound" class="error-message">User not found!</p>
         <!-- <mat-card-actions *ngIf="!userNotFound" class="action-button">
-            <button (click)="update_EVENT()" mat-raised-button color="primary" disabled>
+            <button (click)="updateEvent()" mat-raised-button color="primary" disabled>
                 UPDATE
             </button>
         </mat-card-actions> -->

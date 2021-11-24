@@ -284,7 +284,7 @@ export class MainPageComponent implements OnInit {
     this.emailInput = '';
   }
 
-  lookup_EVENT() {
+  lookupEvent() {
     this.showUserInfoSection = true;
     this.userNotFound = false;
     this.loading = true;
@@ -355,7 +355,7 @@ export class MainPageComponent implements OnInit {
     console.log('email', email);
   }
 
-  update_EVENT() {
+  updateEvent() {
     this.updating = true;
     let form = this.myForm.get('formArray');
     this.mainPageService.updateCustomers(form);
